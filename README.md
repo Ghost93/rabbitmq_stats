@@ -23,7 +23,13 @@ After install run the following to see default opitions:
 ```sh
 $ rbqstats --help
 ```
+### RabbitMQ setup
+From a high level, you need to enable the rabbitmq_management plugin and make sure the port it's listening on is reachable from the outside.
 
+Speaking with a little more granularity, using RHEL as an example, these are the steps you need to take:
+* `rabbitmq-plugins enable rabbitmq_management`
+* `iptables -A INPUT -p tcp --destination-port 15627 -j ACCEPT`
+* `iptables-save > /etc/sysconfig/iptables`
 
 ### Development
 
