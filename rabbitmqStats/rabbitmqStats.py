@@ -25,7 +25,7 @@ class rabbitmqStats():
             )
 
         except Exception as e:
-            print "init: {0}". format(e)
+            print("init: {0}".format(e))
             sys.exit()
 
     def fetch(self, host, port, url, user, pwd):
@@ -76,8 +76,8 @@ if __name__ == "__main__":
 
     names = internal_rbq.queue_names()
 
-    print "Queue Names: \n{}\n".format(names)
-    print "Queue Stats:"
+    print("Queue Names: \n{}\n".format(names))
+    print("Queue Stats:")
 
     for i in names:
         stats = internal_rbq.queue_msg_stats(i)
@@ -86,6 +86,6 @@ if __name__ == "__main__":
                 '%a %d %b %H:%M:%S %Z %Y',
                 time.localtime(internal_rbq.timestamp)
             )
-            print "{}\n".format(stats)
+            print("{}\n".format(stats))
         else:
-            print "{}\n".format(stats)
+            print("{}\n".format(stats))
