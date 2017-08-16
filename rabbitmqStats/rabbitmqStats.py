@@ -51,7 +51,6 @@ class rabbitmqStats():
                 stat_data[str(key)] = int(item)
 
         return stat_data
-        return dict(stat_data)
 
     def queue_msg_stats(self, name):
         """Get metrics of rabbitmq queue"""
