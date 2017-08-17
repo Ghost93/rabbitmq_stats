@@ -1,2 +1,2 @@
-from RabbitMQStats import *
+from .RabbitMQStats import *
 
