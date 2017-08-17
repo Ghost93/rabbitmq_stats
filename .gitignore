@@ -2,7 +2,8 @@
 *.in
 *.egg*
 *.rst
-setup.py
 MANIFEST*
 *.log
 *.swp
+*~
+
