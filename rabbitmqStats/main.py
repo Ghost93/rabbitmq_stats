@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import click
 import json
-from rabbitmqStats import rabbitmqStats
+from rabbitmqStats import RabbitMQStats
 from _config import VERSION
 import time
 import sys
@@ -22,7 +22,7 @@ def main(host, port, url, user, pwd, filename, console, polling):
 	""
 	while True:
 		try:
-			rbq = rabbitmqStats(host, port, url, user, pwd)
+			rbq = RabbitMQStats(host, port, url, user, pwd)
 		except Exception:
 			print "ERROR: Invalid 'host' or 'port'"
 			sys.exit()

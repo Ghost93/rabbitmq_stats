@@ -5,8 +5,7 @@ import time
 import json
 import sys
 
-
-class rabbitmqStats():
+class RabbitMQStats():
 	"""This is the class docstring"""
 	# defined array to hold queue names
 	r = []
@@ -17,10 +16,7 @@ class rabbitmqStats():
 		self.timestamp = int(time.time())
 
 		try:
-			self.r = requests.get(
-				'http://{0}:{1}{2}'.format(host, port, url), auth=(user, pwd)
-			)
-
+			self.r = requests.get('http://{0}:{1}{2}'.format(host, port, url), auth=(user, pwd))
 		except Exception as e:
 			print("init: {0}".format(e))
 			sys.exit()
@@ -61,12 +57,11 @@ class rabbitmqStats():
 			cleaned_msg_stats['name'] = name
 			return cleaned_msg_stats
 		else:
-			return "Queue '{}' does not have "\
-				"any 'message_stats' available".format(name)
+			return "Queue '{}' does not have any 'message_stats' available".format(name)
 
 
 if __name__ == "__main__":
-	internal_rbq = rabbitmqStats('localhost', '15672', '/api/queues', 'guest', 'guest')
+	internal_rbq = RabbitMQStats('localhost', '15672', '/api/queues', 'guest', 'guest')
 
 	names = internal_rbq.queue_names()
 
