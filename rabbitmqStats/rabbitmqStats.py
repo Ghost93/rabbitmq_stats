@@ -26,11 +26,7 @@ class RabbitMQStats():
 
 	def queue_names(self):
 		"""Get queue names from rabbitmq and return a list"""
-		qs = []
-
-		{qs.append((str(queue['name']))) for queue in self.r.json()}
-
-		return qs
+		return [str(queue['name']) for queue in self.r.json().values()]
 
 	def __walk_json(self, node):
 		stat_data = {}
