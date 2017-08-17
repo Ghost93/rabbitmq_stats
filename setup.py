@@ -10,7 +10,6 @@ setuptools.setup(
 	url = "https://github.com/mcronce/rabbitmq_stats",
 	packages = ['rabbitmq_stats'],
 	install_requires = ['requests'],
-	# package_data = {'': ['']},
 	classifiers = [
 		'Development Status :: 3 - Alpha',
 		'Environment :: Console',
