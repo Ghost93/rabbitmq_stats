@@ -13,11 +13,7 @@ class RabbitMQStats():
 	username = None
 	password = None
 
-	timestamp = 0
-
 	def __init__(self, host, port, url, user, pwd):
-		# Get epoch. can be formatted later
-		self.timestamp = int(time.time())
 		self.host = host
 		self.port = port
 		self.base_url = url
