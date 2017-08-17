@@ -17,11 +17,8 @@ setup(
 	license = 'MIT',
 	url = "https://github.com/CodeBleu/rabbitmqStats",
 	packages = ['rabbitmqStats'],
-	install_requires = ['requests', 'click'],
+	install_requires = ['requests'],
 	# package_data = {'': ['']},
-	entry_points = {
-		'console_scripts': ['rbqstats=rabbitmqStats.main:main'],
-	},
 	classifiers = [
 		'Development Status :: 3 - Alpha',
 		'Environment :: Console',
