@@ -1,10 +1,6 @@
-#!/usr/bin/env python
-try:
-	from setuptools import setup
-except:
-	from distutils.core import setup
+import setuptools
 
-setup(
+setuptools.setup(
 	name = "rabbitmq_stats",
 	version = '0.1.0',
 	description = "Gather RabbitMQ Stats for external logging",
