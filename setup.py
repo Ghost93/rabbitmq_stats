@@ -9,20 +9,20 @@ from rabbitmqStats._config import VERSION
 ver = VERSION
 
 setup(
-	name="rabbitmq_stats",
-	version=ver,
-	description="Gather RabbitMQ Stats for external logging",
-	author="Jason Hollis",
-	author_email="jhollis@jdubb.net",
-	license='MIT',
-	url="https://github.com/CodeBleu/rabbitmqStats",
-	packages=['rabbitmqStats'],
-	install_requires=['requests', 'click'],
-	# package_data={'': ['']},
-	entry_points={
+	name = "rabbitmq_stats",
+	version = ver,
+	description = "Gather RabbitMQ Stats for external logging",
+	author = "Jason Hollis",
+	author_email = "jhollis@jdubb.net",
+	license = 'MIT',
+	url = "https://github.com/CodeBleu/rabbitmqStats",
+	packages = ['rabbitmqStats'],
+	install_requires = ['requests', 'click'],
+	# package_data = {'': ['']},
+	entry_points = {
 		'console_scripts': ['rbqstats=rabbitmqStats.main:main'],
 	},
-	classifiers=[
+	classifiers = [
 		'Development Status :: 3 - Alpha',
 		'Environment :: Console',
 		'Intended Audience :: Developers',
