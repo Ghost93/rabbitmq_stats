@@ -65,22 +65,3 @@ def queue_msg_stats(queues, name):
 	else:
 		return 'Queue \'{}\' doe snot have any \'message_stats\' available'.format(name)
 
-if __name__ == "__main__":
-	internal_rbq = RabbitMQStats('localhost', '15672', '/api', 'guest', 'guest')
-	queues = internal_rbq.get_queues()
-	names = queue_names(queues)
-
-	print("Queue Names: \n{}\n".format(names))
-	print("Queue Stats:")
-
-	for i in names:
-		stats = queue_msg_stats(queues, i)
-		if type(stats) is dict:
-			stats['timestamp'] = time.strftime(
-				'%a %d %b %H:%M:%S %Z %Y',
-				time.localtime(internal_rbq.timestamp)
-			)
-			print("{}\n".format(stats))
-		else:
-			print("{}\n".format(stats))
-
