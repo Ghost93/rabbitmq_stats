@@ -36,32 +36,3 @@ class RabbitMQStats():
 			return {}
 		return r.json()
 
-def queue_names(queues):
-	return [str(queue['name']) for queue in queues.values()]
-
-def clean_msg_stats(node):
-	stat_data = {}
-	for key, item in node.items():
-		if isinstance(item, dict):
-			if 'rate' in item:
-				stat_data[str(key)] = int(item['rate'])
-			else:
-				self.__walk_json(item)
-		else:
-			stat_data[str(key)] = int(item)
-
-	return stat_data
-
-def queue_msg_stats(queues, name):
-	names = queue_names(queues)
-	num = names.index(name)
-	queue = queues[num]
-
-	if('message_stats' in queue):
-		msg_stats = queue['message_stats']
-		cleaned_msg_stats = clean_msg_stats(msg_stats)
-		cleaned_msg_stats['name'] = name
-		return cleaned_msg_stats
-	else:
-		return 'Queue \'{}\' doe snot have any \'message_stats\' available'.format(name)
-
