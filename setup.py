@@ -4,19 +4,15 @@ try:
 except:
 	from distutils.core import setup
 
-from rabbitmqStats._config import VERSION
-
-ver = VERSION
-
 setup(
 	name = "rabbitmq_stats",
-	version = ver,
+	version = '0.1.0',
 	description = "Gather RabbitMQ Stats for external logging",
-	author = "Jason Hollis",
-	author_email = "jhollis@jdubb.net",
+	author = "Mike Cronce",
+	author_email = "mike@quadra-tec.net",
 	license = 'MIT',
-	url = "https://github.com/CodeBleu/rabbitmqStats",
-	packages = ['rabbitmqStats'],
+	url = "https://github.com/mcronce/rabbitmq_stats",
+	packages = ['rabbitmq_stats'],
 	install_requires = ['requests'],
 	# package_data = {'': ['']},
 	classifiers = [
