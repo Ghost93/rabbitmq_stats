@@ -7,65 +7,74 @@ import sys
 
 class RabbitMQStats():
 	"""This is the class docstring"""
-	# defined array to hold queue names
-	r = []
-	timestamp = ""
+	host = None
+	port = None
+	base_url = None
+	username = None
+	password = None
+
+	timestamp = 0
 
 	def __init__(self, host, port, url, user, pwd):
 		# Get epoch. can be formatted later
 		self.timestamp = int(time.time())
+		self.host = host
+		self.port = port
+		self.base_url = url
+		self.username = user
+		self.password = pwd
 
+	def get_queues(self):
+		body = self._request('/queues')
+		return body
+
+	def _request(self, path):
 		try:
-			self.r = requests.get('http://{0}:{1}{2}'.format(host, port, url), auth=(user, pwd))
-		except Exception as e:
-			print("init: {0}".format(e))
-			sys.exit()
+			r = requests.get('http://{0}:{1}{2}{3}'.format(self.host, self.port, self.base_url, path), auth = (self.username, self.password))
+		except Excpetion as e:
+			print('_request: {0}'.format(e))
+			return {}
+		return r.json()
 
-	def fetch(self, host, port, url, user, pwd):
-		return self.__init__(host, port, url, user, pwd)
+def queue_names(queues):
+	return [str(queue['name']) for queue in queues.values()]
 
-	def queue_names(self):
-		"""Get queue names from rabbitmq and return a list"""
-		return [str(queue['name']) for queue in self.r.json().values()]
-
-	def __walk_json(self, node):
-		stat_data = {}
-		for key, item in node.items():
-			if isinstance(item, dict):
-				if 'rate' in item:
-					stat_data[str(key)] = int(item['rate'])
-				else:
-					self.__walk_json(item)
+def clean_msg_stats(node):
+	stat_data = {}
+	for key, item in node.items():
+		if isinstance(item, dict):
+			if 'rate' in item:
+				stat_data[str(key)] = int(item['rate'])
 			else:
-				stat_data[str(key)] = int(item)
-
-		return stat_data
-
-	def queue_msg_stats(self, name):
-		"""Get metrics of rabbitmq queue"""
-		num = self.queue_names().index(name)
-
-		queue = self.r.json()[num]
-
-		if 'message_stats' in queue:
-			msg_stats = queue['message_stats']
-			cleaned_msg_stats = self.__walk_json(msg_stats)
-			cleaned_msg_stats['name'] = name
-			return cleaned_msg_stats
+				self.__walk_json(item)
 		else:
-			return "Queue '{}' does not have any 'message_stats' available".format(name)
+			stat_data[str(key)] = int(item)
 
+	return stat_data
+
+def queue_msg_stats(queues, name):
+	names = queue_names(queues)
+	num = names.index(name)
+	queue = queues[num]
+
+	if('message_stats' in queue):
+		msg_stats = queue['message_stats']
+		cleaned_msg_stats = clean_msg_stats(msg_stats)
+		cleaned_msg_stats['name'] = name
+		return cleaned_msg_stats
+	else:
+		return 'Queue \'{}\' doe snot have any \'message_stats\' available'.format(name)
 
 if __name__ == "__main__":
-	internal_rbq = RabbitMQStats('localhost', '15672', '/api/queues', 'guest', 'guest')
-
-	names = internal_rbq.queue_names()
+	internal_rbq = RabbitMQStats('localhost', '15672', '/api', 'guest', 'guest')
+	queues = internal_rbq.get_queues()
+	names = queue_names(queues)
 
 	print("Queue Names: \n{}\n".format(names))
 	print("Queue Stats:")
 
 	for i in names:
-		stats = internal_rbq.queue_msg_stats(i)
+		stats = queue_msg_stats(queues, i)
 		if type(stats) is dict:
 			stats['timestamp'] = time.strftime(
 				'%a %d %b %H:%M:%S %Z %Y',

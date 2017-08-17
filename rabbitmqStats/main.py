@@ -1,16 +1,15 @@
 #!/usr/bin/python
 import click
 import json
-from rabbitmqStats import RabbitMQStats
+import rabbitmqStats
 from _config import VERSION
 import time
 import sys
 
-
 @click.command()
 @click.option('--host', default='localhost', help='Specify RabbitMQ host (default = localhost)')
 @click.option('--port', default='15672', help='Specify RabbitMQ port (default = 15672)')
-@click.option('--url', default='/api/queues', help='Specify RabbitMQ api (default = /api/queues)')
+@click.option('--url', default='/api', help='Specify RabbitMQ api (default = /api)')
 @click.option('--user', default='guest', help='Specify RabbitMQ user (default = guest)')
 @click.option('--pwd', default='guest', help='Specify RabbitMQ passwrd (default = guest)')
 @click.option('--polling', default=1, help='Specify time (secs) to gather queue stats (default = 1)')
@@ -22,20 +21,22 @@ def main(host, port, url, user, pwd, filename, console, polling):
 	""
 	while True:
 		try:
-			rbq = RabbitMQStats(host, port, url, user, pwd)
+			rbq = rabbitmqStats.RabbitMQStats(host, port, url, user, pwd)
 		except Exception:
 			print "ERROR: Invalid 'host' or 'port'"
 			sys.exit()
+
 		try:
-			queues = rbq.queue_names()
+            queues = rbq.get_queues()
+			names = rabbitmqStats.queue_names(queues)
 		except Exception:
 			print "ERROR: Invalid (one or more) 'url', 'user', 'pass' setting"
 			sys.exit()
 
 		time.sleep(polling)
 
-		for que in queues:
-			if type(rbq.queue_msg_stats(que)) is not str:
+		for que in names:
+			if(type(rabbitmqStats.queue_msg_stats(queues, que)) is not str):
 				stats = rbq.queue_msg_stats(que)
 				stats['timestamp'] = time.strftime(
 					'%a %d %b %H:%M:%S %Z %Y',
