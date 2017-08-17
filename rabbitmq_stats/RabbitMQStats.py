@@ -24,6 +24,14 @@ class RabbitMQStats():
 		self.username = user
 		self.password = pwd
 
+	def get_overview(self):
+		body = self._request('/overview')
+		return body
+
+	def get_nodes(self):
+		body = self._request('/nodes')
+		return body
+
 	def get_queues(self):
 		body = self._request('/queues')
 		return body
