@@ -33,17 +33,17 @@ class RabbitMQStats():
 		return body
 
 	def get_partitions(self):
-		queues = self.get_queues()
+		nodes = self.get_nodes()
 		partitions = []
-		for queue in queues:
-			partitions.extend(queue['partitions'])
+		for node in nodes:
+			partitions.extend(node['partitions'])
 		return partitions
 
 	def get_applications(self):
-		queues = self.get_queues()
+		nodes = self.get_nodes()
 		applications = {}
-		for queue in queues:
-			for application in queue['applications']:
+		for node in nodes:
+			for application in node['applications']:
 				applications[application['name']] = application
 		return applications
 
