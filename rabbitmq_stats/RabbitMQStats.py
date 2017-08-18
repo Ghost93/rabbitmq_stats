@@ -43,7 +43,7 @@ class RabbitMQStats():
 		queues = self.get_queues()
 		applications = {}
 		for queue in queues:
-			for application in queue['applications']
+			for application in queue['applications']:
 				applications[application['name']] = application
 		return applications
 
