@@ -32,6 +32,21 @@ class RabbitMQStats():
 		body = self._request('/queues')
 		return body
 
+	def get_partitions(self):
+		queues = self.get_queues()
+		partitions = []
+		for queue in queues:
+			partitions.extend(queue['partitions'])
+		return partitions
+
+	def get_applications(self):
+		queues = self.get_queues()
+		applications = {}
+		for queue in queues:
+			for application in queue['applications']
+				applications[application['name']] = application
+		return applications
+
 	def _request(self, path):
 		try:
 			r = requests.get('http://{0}:{1}{2}{3}'.format(self.host, self.port, self.base_url, path), auth = (self.username, self.password))
