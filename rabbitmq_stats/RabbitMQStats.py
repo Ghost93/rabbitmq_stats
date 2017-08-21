@@ -36,11 +36,11 @@ class RabbitMQStats():
 		return body
 
 	def get_node_details(self, node_name, memory = True, binary = False):
-		body = self._request(url = '/nodes/%s?memory=%s&binary=%s' % (node_name, str(memory).lower(), str(binary).lower()))
+		body = self._request('/nodes/%s?memory=%s&binary=%s' % (node_name, str(memory).lower(), str(binary).lower()))
 		return body
 
 	def get_node_health(self, node_name):
-		body = self._request(url = '/healthchecks/node/%s' % (node_name))
+		body = self._request('/healthchecks/node/%s' % (node_name))
 		return body
 
 	def get_queues(self):
