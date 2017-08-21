@@ -28,6 +28,17 @@ class RabbitMQStats():
 		body = self._request('/nodes')
 		return body
 
+	def get_node_details(self, node_name, memory = True, binary = False):
+		append = []
+		if(memory):
+			append.append('memory')
+		if(binary):
+			append.append('binary')
+		if(len(append) > 0):
+			append = '?' + '&'.join(append)
+		body = self._request('/nodes/%s%s' % (node_name, append))
+		return body
+
 	def get_queues(self):
 		body = self._request('/queues')
 		return body
