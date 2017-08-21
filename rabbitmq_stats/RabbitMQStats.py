@@ -24,8 +24,15 @@ class RabbitMQStats():
 		body = self._request('/overview')
 		return body
 
-	def get_nodes(self):
-		body = self._request('/nodes')
+	def get_nodes(self, memory = False, binary = False, health = False):
+		nodes = self._request('/nodes')
+		body = []
+		for node in nodes:
+			if(memory or binary):
+				node = self.get_node_details(node['name'], memory, binary)
+			if(health):
+				node['health'] = self.get_node_health(node['name'])
+			body.append(node)
 		return body
 
 	def get_node_details(self, node_name, memory = True, binary = False):
