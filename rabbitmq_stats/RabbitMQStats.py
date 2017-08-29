@@ -47,6 +47,15 @@ class RabbitMQStats():
 		body = self._request('/queues')
 		return body
 
+	def get_listeners(self):
+		overview = self.get_overview()
+		listeners_by_node = {}
+		for listener in overview['listeners']:
+			if(listener['node'] not in listeners_by_node):
+				listeners_by_node[listener['node']] = []
+			listeners_by_node[listener['node']].append(listener)
+		return listeners_by_node
+
 	def get_partitions(self):
 		nodes = self.get_nodes()
 		partitions = []
