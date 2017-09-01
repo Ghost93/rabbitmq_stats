@@ -74,7 +74,7 @@ class RabbitMQStats():
 	def _request(self, path):
 		try:
 			r = requests.get('http://{0}:{1}{2}{3}'.format(self.host, self.port, self.base_url, path), auth = (self.username, self.password))
-		except Excpetion as e:
+		except Exception as e:
 			print('_request: {0}'.format(e))
 			return {}
 		return r.json()
