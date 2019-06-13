@@ -40,6 +40,9 @@ class RabbitMQStats:
         body = self._request('/queues')
         return body
 
+    def get_queue_detailed(self, queue_name):
+        return self._request('/queues/{0}/{1}'.format(self.username, queue_name))
+
     def get_listeners(self):
         overview = self.get_overview()
         listeners_by_node = {}
